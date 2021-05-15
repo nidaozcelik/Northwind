@@ -8,18 +8,20 @@ class CategoryList extends Component {
     componentDidMount() {
         this.props.actions.getCategories()
     }
+    selectCategory = (category) => {
+        this.props.actions.changeCategory(category)
+    }
     render() {
         return (
             <div>
                 <h3>Categories</h3>
                 <ListGroup>
                     {this.props.categories.map(category => (
-                        <ListGroupItem>
+                        <ListGroupItem key={category.id} active={category.id === this.props.currentCategory.id} onClick={() => this.selectCategory(category)} >
                             {category.categoryName}
                         </ListGroupItem>
                     ))}
                 </ListGroup>
-                <h5> {this.props.currentCategory.categoryName}</h5>
             </div>
         )
     }
@@ -35,7 +37,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            getCategories: bindActionCreators(categoryActions.getCategories, dispatch)
+            getCategories: bindActionCreators(categoryActions.getCategories, dispatch),
+            changeCategory: bindActionCreators(categoryActions.changeCategory, dispatch)
         }
     }
 }
