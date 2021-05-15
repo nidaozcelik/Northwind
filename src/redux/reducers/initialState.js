@@ -1,3 +1,5 @@
 export default {
-    currentCategory:{}
+    currentCategory: {
+        categoryName: "Baveringes"
+    }
 }
