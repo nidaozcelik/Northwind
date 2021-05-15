@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
-import { ListGroup, ListGroupItem, Table } from 'reactstrap'
+import { Table, Button } from 'reactstrap'
 import { bindActionCreators } from "redux"
 import * as productActions from "../../redux/actions/productActions"
+import * as cartActions from "../../redux/actions/cartActions"
+import alertify from "alertifyjs"
 
 class ProductList extends Component {
     componentDidMount() {
         this.props.actions.getProducts()
+    }
+    addToCart = (product) => {
+        this.props.actions.addToCart({ quantity: 1, product })
+        alertify.success(product.productName+" added to cart")
     }
     render() {
         return (
@@ -22,6 +28,7 @@ class ProductList extends Component {
                             <th>quantityPerUnit</th>
                             <th>unitPrice</th>
                             <th>unitsInStock</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +40,11 @@ class ProductList extends Component {
                                 <td >{product.quantityPerUnit}</td>
                                 <td >{product.unitPrice}</td>
                                 <td > {product.unitsInStock}</td>
+                                <td >
+                                    <Button color="success" onClick={() => this.addToCart(product)}>
+                                        Add
+                                    </Button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -52,7 +64,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            getProducts: bindActionCreators(productActions.getProducts, dispatch)
+            getProducts: bindActionCreators(productActions.getProducts, dispatch),
+            addToCart: bindActionCreators(cartActions.addToCart, dispatch)
         }
     }
 }
