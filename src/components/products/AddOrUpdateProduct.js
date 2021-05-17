@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from "react-redux";
 import { getCategories } from "../../redux/actions/categoryActions";
 import { saveProduct } from "../../redux/actions/productActions"
+import ProductDetail from './ProductDetail';
 
 function AddOrUpdateProduct({
     products,
@@ -34,6 +35,10 @@ function AddOrUpdateProduct({
             history.push("/")
         })
     }
+
+    return (
+        <ProductDetail product={product} categories={categories} onChange={handleChange} onSave={handleSave} />
+    )
 }
 
 export function getProductById(products, productId) {
