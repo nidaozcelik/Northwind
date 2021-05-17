@@ -25,7 +25,6 @@ const Navi = (props) => {
                         <NavItem>
                             <NavLink><Link to="/saveproduct">Add Product</Link></NavLink>
                         </NavItem>
-
                         <CartSummary />
                     </Nav>
                 </Collapse>
