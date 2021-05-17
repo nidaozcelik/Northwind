@@ -11,8 +11,14 @@ import {
     DropdownItem,
     Badge
 } from 'reactstrap';
+import { Link } from "react-router-dom"
+import alertify from "alertifyjs"
 
 class CartSummary extends Component {
+    removeFromCart(product) {
+        this.props.actions.removeFromCart(product)
+        alertify.error(product.productName+" deleted to cart")
+    }
     renderEmpty() {
         return (
             <NavItem>
@@ -29,14 +35,14 @@ class CartSummary extends Component {
                 <DropdownMenu right>
                     {this.props.cart.map(cartItem => (
                         <DropdownItem key={cartItem.product.id}>
-                            <Badge color="danger" onClick={() => this.props.actions.removeFromCart(cartItem.product)}>-</Badge>
+                            <Badge color="danger" onClick={() => this.removeFromCart(cartItem.product)}>-</Badge>
                             {cartItem.product.productName}
                             <Badge color="success">{cartItem.quantity}</Badge>
                         </DropdownItem>
                     ))}
                     <DropdownItem divider />
                     <DropdownItem>
-                        Go to cart
+                        <Link to={"/cart"}>Go to cart</Link>
                     </DropdownItem>
                 </DropdownMenu>
             </UncontrolledDropdown>
